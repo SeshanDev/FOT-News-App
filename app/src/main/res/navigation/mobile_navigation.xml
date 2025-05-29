@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.fotnewsapp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_explore"
+        android:name="com.example.fotnewsapp.ui.explore.ExploreFragment"
+        android:label="@string/menu_explore"
+        tools:layout="@layout/fragment_explore" />
+
+    <fragment
+        android:id="@+id/nav_userinfo"
+        android:name="com.example.fotnewsapp.ui.userinfo.UserinfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_userinfo" />
+
+    <fragment
+        android:id="@+id/nav_dev"
+        android:name="com.example.fotnewsapp.ui.devinfo.DevinfoFragment"
+        android:label="@string/menu_dev"
+        tools:layout="@layout/fragment_devinfo" />
+
+    <fragment
+        android:id="@+id/nav_education"
+        android:name="com.example.fotnewsapp.ui.education.EducationFragment"
+        android:label="Education" />
+
+    <fragment
+        android:id="@+id/nav_events"
+        android:name="com.example.fotnewsapp.ui.events.EventsFragment"
+        android:label="Events" />
+
+</navigation>
