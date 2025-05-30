@@ -27,12 +27,12 @@
 
         <activity
             android:name=".LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.FOTNewsApp.NoActionBar" />
 
         <activity
             android:name=".SignupActivity"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Theme.FOTNewsApp.NoActionBar">
         </activity>
 

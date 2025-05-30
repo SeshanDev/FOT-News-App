@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fotnewsapp.LoginActivity;
 import com.example.fotnewsapp.SignupActivity;
 import com.example.fotnewsapp.databinding.FragmentUserinfoBinding;
 import com.example.fotnewsapp.R;
@@ -246,7 +247,7 @@ public class UserinfoFragment extends Fragment {
                 .remove("username")
                 .apply();
 
-        Intent intent = new Intent(getContext(), SignupActivity.class);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 

@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
 
         // Navigate to SignupActivity or MainActivity after delay or on some logic
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(this, SignupActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }, 1000); // 2 seconds splash
     }
