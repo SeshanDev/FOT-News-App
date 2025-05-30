@@ -28,14 +28,26 @@ public class EventsFragment extends Fragment {
         View root = binding.getRoot();
 
         List<NewsItem> newsList = new ArrayList<>();
-        newsList.add(new NewsItem(R.drawable.logo, "Galle take firm control of NSL final", "29 Apr 2025",
-                "Galle took firm control when they reduced their opponents Dambulla to 154 for five on the second day of the National Super League four-day cricket tournament final, continued at the SSC Grounds in Maitland Place yesterday."));
-        newsList.add(new NewsItem(R.drawable.facebook, "Title 2", "28 Apr 2025",
-                "Short description for news 2 goes here, with some longer details. Galle took firm control when they reduced their opponents Dambulla to 154 for five...Galle took firm control when they reduced their opponents Dambulla to 154 for five on the second day of the National Super League four-day cricket tournament final, continued at the SSC Grounds in Maitland Place yesterday."));
-        newsList.add(new NewsItem(R.drawable.google, "Title 3", "27 Apr 2025",
-                "Another news body example that can be expanded and collapsed.Galle took firm control when they reduced their opponents Dambulla to 154 for five on the second day of the National Super League four-day cricket tournament final, continued at the SSC Grounds in Maitland Place yesterday."));
-        newsList.add(new NewsItem(R.drawable.background, "Title 4", "26 Apr 2025",
-                "More detailed news content here to test the expandable feature.Galle took firm control when they reduced their opponents Dambulla to 154 for five on the second day of the National Super League four-day cricket tournament final, continued at the SSC Grounds in Maitland Place yesterday."));
+        newsList.add(new NewsItem(R.drawable.event_1, "University of Colombo gets new Vice Chancellor", "29 Apr 2025",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n" +
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n" +
+                        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \n" +
+                        "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam."));
+        newsList.add(new NewsItem(R.drawable.event_2, "Technology | University of Colombo, Sri Lanka", "28 Apr 2025",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n" +
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n" +
+                        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \n" +
+                        "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam."));
+        newsList.add(new NewsItem(R.drawable.event_3, "News and Events - Faculty of Science", "27 Apr 2025",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n" +
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n" +
+                        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \n" +
+                        "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam."));
+        newsList.add(new NewsItem(R.drawable.event_4, "Upcoming Events | University of Colombo, Sri Lanka", "26 Apr 2025",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n" +
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n" +
+                        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \n" +
+                        "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam."));
 
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_news);

@@ -7,7 +7,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -94,21 +97,56 @@ public class UserinfoFragment extends Fragment {
 
         EditText usernameEdit = dialogView.findViewById(R.id.edit_username);
         EditText emailEdit = dialogView.findViewById(R.id.edit_email);
+        EditText passwordEdit = dialogView.findViewById(R.id.edit_password);
+        EditText confirmPasswordEdit = dialogView.findViewById(R.id.edit_confirm_password);
+
         Button okButton = dialogView.findViewById(R.id.btn_ok);
         Button cancelButton = dialogView.findViewById(R.id.btn_cancel);
 
+        // Set current username and email
         usernameEdit.setText(currentUsername);
         emailEdit.setText(currentEmail);
+
+        // Load current password from Firebase and show as **** masked
+        userRef.child("password").get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                String currentPassword = snapshot.getValue(String.class);
+                // Show masked password as stars
+                if (currentPassword != null && !currentPassword.isEmpty()) {
+                    passwordEdit.setText(currentPassword);  // Keep actual password for toggle
+                } else {
+                    passwordEdit.setText("");
+                }
+                confirmPasswordEdit.setText("");
+            }
+        });
+
+        // Initialize password fields as hidden (masked) and add toggle functionality
+        togglePasswordVisibility(passwordEdit);
+        togglePasswordVisibility(confirmPasswordEdit);
 
         AlertDialog dialog = builder.create();
 
         okButton.setOnClickListener(v -> {
             String newUsername = usernameEdit.getText().toString().trim();
             String newEmail = emailEdit.getText().toString().trim();
+            String newPassword = passwordEdit.getText().toString();
+            String confirmPassword = confirmPasswordEdit.getText().toString();
 
             if (newUsername.isEmpty() || newEmail.isEmpty()) {
-                Toast.makeText(getContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Username and Email cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
+            }
+
+            if (!newPassword.isEmpty()) {
+                if (newPassword.length() < 6) {
+                    Toast.makeText(getContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!newPassword.equals(confirmPassword)) {
+                    Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
             if (!newUsername.equals(currentUsername)) {
@@ -130,6 +168,11 @@ public class UserinfoFragment extends Fragment {
                                                     newRef.child("username").setValue(newUsername);
                                                     newRef.child("email").setValue(newEmail);
 
+                                                    // Update password if provided
+                                                    if (!newPassword.isEmpty()) {
+                                                        newRef.child("password").setValue(newPassword);
+                                                    }
+
                                                     // Remove old node
                                                     userRef.removeValue();
 
@@ -145,20 +188,30 @@ public class UserinfoFragment extends Fragment {
                                                     // Notify and logout
                                                     Toast.makeText(getContext(), "Username changed. Please log in again.", Toast.LENGTH_LONG).show();
                                                     dialog.dismiss();
-                                                    logoutUser();  // <-- LOGOUT USER HERE
+                                                    logoutUser();
                                                 });
                                     }
                                 });
                             }
                         });
             } else {
-                // Username unchanged, update email only
-                userRef.child("email").setValue(newEmail).addOnSuccessListener(unused -> {
+                // Username unchanged, update email and password only
+                userRef.child("email").setValue(newEmail);
+
+                if (!newPassword.isEmpty()) {
+                    userRef.child("password").setValue(newPassword)
+                            .addOnSuccessListener(unused -> {
+                                // Logout after password update
+                                Toast.makeText(getContext(), "Password updated. Please log in again.", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                logoutUser();
+                            });
+                } else {
                     currentEmail = newEmail;
                     binding.emailValue.setText(newEmail);
                     Toast.makeText(getContext(), "Information updated", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                });
+                }
             }
         });
 
@@ -166,6 +219,51 @@ public class UserinfoFragment extends Fragment {
 
         dialog.show();
     }
+
+    // Helper method to toggle password visibility on EditText with drawableEnd icon
+    private void togglePasswordVisibility(EditText editText) {
+        // Initially password is hidden
+        editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            final int DRAWABLE_RIGHT = 2; // index of drawableEnd/right drawable
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // Toggle visibility
+                        if (editText.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                            // Show password
+                            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            // Change icon to eye open
+                            editText.setCompoundDrawablesWithIntrinsicBounds(
+                                    editText.getCompoundDrawables()[0], // left
+                                    null,
+                                    getResources().getDrawable(R.drawable.ic_baseline_visibility_off_24),
+                                    null);
+                        } else {
+                            // Hide password
+                            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            // Change icon to eye closed
+                            editText.setCompoundDrawablesWithIntrinsicBounds(
+                                    editText.getCompoundDrawables()[0], // left
+                                    null,
+                                    getResources().getDrawable(R.drawable.ic_baseline_visibility_off_24),
+                                    null);
+                        }
+                        // Move cursor to the end
+                        editText.setSelection(editText.getText().length());
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+
+
 
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

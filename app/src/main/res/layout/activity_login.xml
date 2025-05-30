@@ -13,10 +13,10 @@
         android:id="@+id/logoImage"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="64dp"
+        android:layout_margin="64dp"
         android:contentDescription="App Logo"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo_bg_remove"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,14 +53,14 @@
                     android:textColor="@color/Red"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="60dp"/>
+                    android:layout_marginBottom="40dp"/>
 
                 <EditText
                     android:id="@+id/login_username"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/button_border_black"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="25dp"
                     android:padding="8dp"
                     android:hint="Username"
                     android:drawableLeft="@drawable/ic_baseline_person_pin_24"
@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/button_border_black"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="25dp"
                     android:padding="8dp"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -105,7 +105,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:weightSum="2">
 
