@@ -3,9 +3,13 @@ package com.example.fotnewsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +33,28 @@ public class SignupActivity extends AppCompatActivity {
         signupEmail = findViewById(R.id.signup_email);
         signupUsername = findViewById(R.id.signup_username);
         signupPassword = findViewById(R.id.signup_password);
-        signupConfirmPassword = findViewById(R.id.signup_confirm_password); // 🔧 Added
+        signupConfirmPassword = findViewById(R.id.signup_confirm_password);
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
+        CheckBox termsCheckbox = findViewById(R.id.termsCheckbox);
+
+        // 🔵 Highlight "Sign in" in blue color
+        String fullText = "Already an user? Sign in";
+        SpannableString spannableString = new SpannableString(fullText);
+        int start = fullText.indexOf("Sign in");
+        int end = start + "Sign in".length();
+        spannableString.setSpan(new ForegroundColorSpan(Color.rgb(24, 123, 205)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        loginRedirectText.setText(spannableString);
+
+        // Initially disable button
+        signupButton.setEnabled(false);
+        signupButton.setAlpha(0.5f);
+
+        // Enable only when checkbox is checked
+        termsCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            signupButton.setEnabled(isChecked);
+            signupButton.setAlpha(isChecked ? 1f : 0.5f);
+        });
 
         signupButton.setOnClickListener(view -> {
             database = FirebaseDatabase.getInstance();

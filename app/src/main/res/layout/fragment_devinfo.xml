@@ -24,8 +24,8 @@
     <!-- User Avatar -->
     <ImageView
         android:id="@+id/user_avatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:layout_marginTop="40dp"
         android:src="@drawable/profile"
         android:scaleType="centerInside"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="W.M.S.Nethmika."
-        android:textSize="18sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_marginTop="50dp"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2020t00919"
-        android:textSize="18sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_marginTop="30dp"

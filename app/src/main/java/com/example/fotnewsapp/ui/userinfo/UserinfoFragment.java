@@ -49,6 +49,9 @@ public class UserinfoFragment extends Fragment {
 
         binding.editInfoButton.setOnClickListener(v -> showEditDialog());
 
+        // Added Delete Account button handler
+        binding.deleteAccountButton.setOnClickListener(v -> showDeleteDialog());
+
         return binding.getRoot();
     }
 
@@ -162,6 +165,24 @@ public class UserinfoFragment extends Fragment {
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+
+    private void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete Account")
+                .setMessage("Are you sure you want to delete your account? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // Delete user data from Firebase
+                    userRef.removeValue().addOnSuccessListener(unused -> {
+                        Toast.makeText(getContext(), "Account deleted successfully", Toast.LENGTH_LONG).show();
+                        logoutUser();  // Navigate back to signup
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), "Failed to delete account", Toast.LENGTH_SHORT).show();
+                    });
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
     private void logoutUser() {

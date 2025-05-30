@@ -4,7 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.Spannable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,6 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signupRedirectText);
+
+        // Set "Sign up" text color to blue only
+        String fullText = "Don't have an account? Sign up";
+        String coloredPart = "Sign up";
+        int startIndex = fullText.indexOf(coloredPart);
+        int endIndex = startIndex + coloredPart.length();
+        SpannableString spannableString = new SpannableString(fullText);
+        spannableString.setSpan(new ForegroundColorSpan(Color.rgb(24, 123, 205)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        signupRedirectText.setText(spannableString);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
