@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fotnewsapp.LoginActivity;
-import com.example.fotnewsapp.SignupActivity;
 import com.example.fotnewsapp.databinding.FragmentUserinfoBinding;
 import com.example.fotnewsapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -133,61 +132,85 @@ public class UserinfoFragment extends Fragment {
                 }
             }
 
-            if (!newUsername.equals(currentUsername)) {
-                FirebaseDatabase.getInstance().getReference("users").child(newUsername)
-                        .get().addOnSuccessListener(existingSnapshot -> {
-                            if (existingSnapshot.exists()) {
-                                Toast.makeText(getContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                userRef.get().addOnSuccessListener(snapshot -> {
-                                    if (snapshot.exists()) {
-                                        FirebaseDatabase.getInstance().getReference("users")
-                                                .child(newUsername)
-                                                .setValue(snapshot.getValue())
-                                                .addOnSuccessListener(unused -> {
-                                                    DatabaseReference newRef = FirebaseDatabase.getInstance()
-                                                            .getReference("users").child(newUsername);
-                                                    newRef.child("username").setValue(newUsername);
-                                                    newRef.child("email").setValue(newEmail);
+            // Check for email and username uniqueness across all users
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+            usersRef.get().addOnSuccessListener(snapshot -> {
+                boolean emailExists = false;
+                boolean usernameExists = false;
 
-                                                    if (!newPassword.isEmpty()) {
-                                                        newRef.child("password").setValue(newPassword);
-                                                    }
+                for (DataSnapshot userSnap : snapshot.getChildren()) {
+                    String uid = userSnap.getKey();
+                    String email = userSnap.child("email").getValue(String.class);
 
-                                                    userRef.removeValue();
-
-                                                    userRef.removeEventListener(userListener);
-                                                    userRef = newRef;
-                                                    currentUsername = newUsername;
-                                                    currentEmail = newEmail;
-
-                                                    attachUserListener();
-
-                                                    Toast.makeText(getContext(), "Username changed. Please log in again.", Toast.LENGTH_LONG).show();
-                                                    dialog.dismiss();
-                                                    logoutUser();
-                                                });
-                                    }
-                                });
-                            }
-                        });
-            } else {
-                // Username unchanged — update email and check if password actually changed
-                userRef.child("email").setValue(newEmail);
-                if (!newPassword.isEmpty() && !newPassword.equals(currentPassword)) {
-                    userRef.child("password").setValue(newPassword)
-                            .addOnSuccessListener(unused -> {
-                                Toast.makeText(getContext(), "Password updated. Please log in again.", Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
-                                logoutUser();
-                            });
-                } else {
-                    currentEmail = newEmail;
-                    binding.emailValue.setText(newEmail);
-                    Toast.makeText(getContext(), "Information updated", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    if (uid != null && !uid.equals(currentUsername)) {
+                        if (email != null && email.equalsIgnoreCase(newEmail)) {
+                            emailExists = true;
+                        }
+                        if (uid.equals(newUsername)) {
+                            usernameExists = true;
+                        }
+                    }
                 }
-            }
+
+                if (usernameExists && !newUsername.equals(currentUsername)) {
+                    Toast.makeText(getContext(), "Username already exists!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (emailExists && !newEmail.equalsIgnoreCase(currentEmail)) {
+                    Toast.makeText(getContext(), "Email already in use!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Now perform update logic
+                if (!newUsername.equals(currentUsername)) {
+                    userRef.get().addOnSuccessListener(oldUserSnap -> {
+                        if (oldUserSnap.exists()) {
+                            FirebaseDatabase.getInstance().getReference("users")
+                                    .child(newUsername)
+                                    .setValue(oldUserSnap.getValue())
+                                    .addOnSuccessListener(unused -> {
+                                        DatabaseReference newRef = FirebaseDatabase.getInstance()
+                                                .getReference("users").child(newUsername);
+                                        newRef.child("username").setValue(newUsername);
+                                        newRef.child("email").setValue(newEmail);
+
+                                        if (!newPassword.isEmpty()) {
+                                            newRef.child("password").setValue(newPassword);
+                                        }
+
+                                        userRef.removeValue();
+                                        userRef.removeEventListener(userListener);
+                                        userRef = newRef;
+                                        currentUsername = newUsername;
+                                        currentEmail = newEmail;
+
+                                        attachUserListener();
+
+                                        Toast.makeText(getContext(), "Username changed. Please log in again.", Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        logoutUser();
+                                    });
+                        }
+                    });
+                } else {
+                    // Username unchanged — update email and password
+                    userRef.child("email").setValue(newEmail);
+                    if (!newPassword.isEmpty() && !newPassword.equals(currentPassword)) {
+                        userRef.child("password").setValue(newPassword)
+                                .addOnSuccessListener(unused -> {
+                                    Toast.makeText(getContext(), "Password updated. Please log in again.", Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                    logoutUser();
+                                });
+                    } else {
+                        currentEmail = newEmail;
+                        binding.emailValue.setText(newEmail);
+                        Toast.makeText(getContext(), "Information updated", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }
+            });
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
