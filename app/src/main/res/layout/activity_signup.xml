@@ -50,8 +50,10 @@
                     android:padding="24dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
                         android:text="Sign Up"
                         android:textSize="32sp"
                         android:textStyle="bold"
@@ -142,6 +144,7 @@
                         android:text="Sign Up"
                         android:textSize="18sp"
                         android:textColor="@android:color/white"
+                        android:drawableEnd="@drawable/right_arrow"
                         android:backgroundTint="@android:color/holo_green_dark"
                         app:cornerRadius="20dp" />
 

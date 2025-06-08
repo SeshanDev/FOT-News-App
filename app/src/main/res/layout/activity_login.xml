@@ -45,10 +45,11 @@
                 android:padding="24dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign In"
-                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:textColor="@color/Red"
                     android:textSize="32sp"
                     android:textStyle="bold"
@@ -88,6 +89,7 @@
                     android:textSize="18sp"
                     android:textColor="@android:color/white"
                     app:cornerRadius="20dp"
+                    android:drawableEnd="@drawable/right_arrow"
                     android:backgroundTint="@android:color/holo_green_dark" />
 
                 <TextView
