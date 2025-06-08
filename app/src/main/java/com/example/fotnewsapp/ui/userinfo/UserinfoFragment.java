@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fotnewsapp.LoginActivity;
+import com.example.fotnewsapp.SignupActivity;
 import com.example.fotnewsapp.databinding.FragmentUserinfoBinding;
 import com.example.fotnewsapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -161,6 +163,13 @@ public class UserinfoFragment extends Fragment {
                     Toast.makeText(getContext(), "Email already in use!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() ||
+                        !(newEmail.endsWith("@gmail.com") || newEmail.endsWith("@yahoo.com") || newEmail.endsWith("@outlook.com"))) {
+                    Toast.makeText(getContext(), "Invalid email format", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 // Now perform update logic
                 if (!newUsername.equals(currentUsername)) {

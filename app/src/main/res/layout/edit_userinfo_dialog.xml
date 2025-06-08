@@ -14,6 +14,7 @@
         android:text="Edit"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:layout_gravity="center"
         android:layout_marginBottom="24dp" />
 
@@ -99,7 +100,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint="@android:color/holo_red_dark"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

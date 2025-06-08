@@ -101,6 +101,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        app:cornerRadius="20dp"
+        android:drawableEnd="@drawable/delete"
         app:layout_constraintTop_toBottomOf="@id/edit_info_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -119,7 +121,8 @@
         android:layout_marginTop="60dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:drawableEnd="@drawable/arroright_icon"
+        app:cornerRadius="20dp"
+        android:drawableEnd="@drawable/right_arrow"
         app:layout_constraintTop_toBottomOf="@id/email_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
