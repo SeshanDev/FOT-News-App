@@ -10,6 +10,11 @@
         android:name="com.example.fotnewsapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_sports"
+        android:name="com.example.fotnewsapp.ui.sports.SportsFragment"
+        android:label="@string/menu_sports"
+        tools:layout="@layout/fragment_sports" />
 
     <fragment
         android:id="@+id/nav_explore"

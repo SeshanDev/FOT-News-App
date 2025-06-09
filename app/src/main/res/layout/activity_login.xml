@@ -8,19 +8,6 @@
     android:background="@drawable/background_2"
     tools:context=".LoginActivity">
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/logoImage"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:contentDescription="App Logo"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo_bg_remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <!-- Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/loginCard"
@@ -29,7 +16,7 @@
         android:layout_margin="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/logoImage"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -43,6 +30,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="24dp">
+
+                <!-- Logo ImageView inside CardView -->
+                <ImageView
+                    android:id="@+id/logoImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:contentDescription="App Logo"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_bg_remove"
+                    android:layout_marginBottom="24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,7 +117,6 @@
                         android:drawableTop="@drawable/google"
                         android:background="@drawable/button_border_black"
                         android:contentDescription="Login with Google" />
-
 
                     <Button
                         android:id="@+id/opptionbuttonTwo"

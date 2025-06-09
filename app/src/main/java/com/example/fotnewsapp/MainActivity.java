@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_explore, R.id.nav_userinfo, R.id.nav_dev,
+                R.id.nav_home,R.id.nav_sports, R.id.nav_explore, R.id.nav_userinfo, R.id.nav_dev,
                 R.id.nav_education, R.id.nav_events)
                 .setOpenableLayout(drawer)
                 .build();
@@ -57,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+// Clear default selection
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            bottomNavigationView.getMenu().getItem(i).setChecked(false);
+        }
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
+
 
         Set<Integer> fragmentsToHideBottomNav = new HashSet<>(Arrays.asList(
                 R.id.nav_explore,
